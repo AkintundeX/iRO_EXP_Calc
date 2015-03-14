@@ -31,7 +31,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -43,7 +42,10 @@
             this.comboScreenshotKey = new System.Windows.Forms.ComboBox();
             this.comboReset = new System.Windows.Forms.ComboBox();
             this.comboStop = new System.Windows.Forms.ComboBox();
-            this.comboPause = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboCharSelection = new System.Windows.Forms.ComboBox();
+            this.comboToggleHotkey = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -72,15 +74,6 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "Stop Key";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label4
-            // 
-            this.label4.Location = new System.Drawing.Point(12, 78);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(100, 23);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Pause Key";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label5
             // 
@@ -132,7 +125,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(195, 176);
+            this.btnCancel.Location = new System.Drawing.Point(197, 199);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 10;
@@ -142,7 +135,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(114, 175);
+            this.btnSave.Location = new System.Drawing.Point(116, 199);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 11;
@@ -162,7 +155,9 @@
             "Home",
             "End",
             "Page Up",
-            "Page Down"});
+            "Page Down",
+            "Tab",
+            "No Key"});
             this.comboScreenshotKey.Location = new System.Drawing.Point(118, 11);
             this.comboScreenshotKey.Name = "comboScreenshotKey";
             this.comboScreenshotKey.Size = new System.Drawing.Size(152, 21);
@@ -180,7 +175,9 @@
             "Home",
             "End",
             "Page Up",
-            "Page Down"});
+            "Page Down",
+            "Tab",
+            "No Key"});
             this.comboReset.Location = new System.Drawing.Point(118, 34);
             this.comboReset.Name = "comboReset";
             this.comboReset.Size = new System.Drawing.Size(152, 21);
@@ -198,16 +195,27 @@
             "Home",
             "End",
             "Page Up",
-            "Page Down"});
+            "Page Down",
+            "Tab",
+            "No Key"});
             this.comboStop.Location = new System.Drawing.Point(118, 57);
             this.comboStop.Name = "comboStop";
             this.comboStop.Size = new System.Drawing.Size(152, 21);
             this.comboStop.TabIndex = 14;
             // 
-            // comboPause
+            // label4
             // 
-            this.comboPause.FormattingEnabled = true;
-            this.comboPause.Items.AddRange(new object[] {
+            this.label4.Location = new System.Drawing.Point(12, 78);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(100, 23);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Change Character";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // comboCharSelection
+            // 
+            this.comboCharSelection.FormattingEnabled = true;
+            this.comboCharSelection.Items.AddRange(new object[] {
             "Print Screen",
             "Scroll Lock",
             "Pause",
@@ -216,18 +224,51 @@
             "Home",
             "End",
             "Page Up",
-            "Page Down"});
-            this.comboPause.Location = new System.Drawing.Point(118, 80);
-            this.comboPause.Name = "comboPause";
-            this.comboPause.Size = new System.Drawing.Size(152, 21);
-            this.comboPause.TabIndex = 15;
+            "Page Down",
+            "Tab",
+            "No Key"});
+            this.comboCharSelection.Location = new System.Drawing.Point(118, 80);
+            this.comboCharSelection.Name = "comboCharSelection";
+            this.comboCharSelection.Size = new System.Drawing.Size(152, 21);
+            this.comboCharSelection.TabIndex = 15;
+            // 
+            // comboBox1
+            // 
+            this.comboToggleHotkey.FormattingEnabled = true;
+            this.comboToggleHotkey.Items.AddRange(new object[] {
+            "Print Screen",
+            "Scroll Lock",
+            "Pause",
+            "Insert",
+            "Delete",
+            "Home",
+            "End",
+            "Page Up",
+            "Page Down",
+            "Tab",
+            "No Key"});
+            this.comboToggleHotkey.Location = new System.Drawing.Point(118, 172);
+            this.comboToggleHotkey.Name = "comboBox1";
+            this.comboToggleHotkey.Size = new System.Drawing.Size(152, 21);
+            this.comboToggleHotkey.TabIndex = 17;
+            // 
+            // label8
+            // 
+            this.label8.Location = new System.Drawing.Point(12, 170);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(100, 23);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Toggle Hotkeys";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 205);
-            this.Controls.Add(this.comboPause);
+            this.ClientSize = new System.Drawing.Size(284, 229);
+            this.Controls.Add(this.comboToggleHotkey);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.comboCharSelection);
             this.Controls.Add(this.comboStop);
             this.Controls.Add(this.comboReset);
             this.Controls.Add(this.comboScreenshotKey);
@@ -255,7 +296,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
@@ -267,6 +307,9 @@
         private System.Windows.Forms.ComboBox comboScreenshotKey;
         private System.Windows.Forms.ComboBox comboReset;
         private System.Windows.Forms.ComboBox comboStop;
-        private System.Windows.Forms.ComboBox comboPause;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox comboCharSelection;
+        private System.Windows.Forms.ComboBox comboToggleHotkey;
+        private System.Windows.Forms.Label label8;
     }
 }

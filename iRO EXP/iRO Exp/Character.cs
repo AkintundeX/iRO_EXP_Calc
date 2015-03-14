@@ -23,6 +23,13 @@ namespace iROClassicExp
         public readonly int JOB_EXP;
         public readonly int JOB_EXP_TO_NEXT;
 
+        private const int JOB_99_EXP = 999999999;
+        private const int BASE_99_150_EXP = 99999999;
+
+        private const int MAP_NAME_SIZE = 10;
+        private const int MAX_LEN = 24;
+        private const int MAX_MAP_NAME_LEN = 10;
+
         private int currentHp;
         private int currentSp;
         private int maxHp;
@@ -139,27 +146,186 @@ namespace iROClassicExp
             }
             catch (Exception)
             {
-                HP = 0x008b78dc;
-                SP = 0x008b78e4;
-                MAX_HP = 0x008b78e0;
-                MAX_SP = 0x008b78e8;
-                NAME = 0x008b7bf8;
-                MAP_NAME = 0x008b57a4;
-                WEIGHT = 0x008b64d8;
-                MAX_WEIGHT = 0x008b64cc;
-                EXP = 0x008b6418;
-                EXP_TO_NEXT = 0x008b6424;
-                BASE_LEVEL = 0x008b641c;
-                JOB_LEVEL = 0x008b6428;
-                JOB_EXP = 0x008b64d4;
-                JOB_EXP_TO_NEXT = 0x008b64d0;
+                if (client == Client.Classic)
+                {
+                    HP = 0x008b78dc;
+                    SP = 0x008b78e4;
+                    MAX_HP = 0x008b78e0;
+                    MAX_SP = 0x008b78e8;
+                    NAME = 0x008b7bf8;
+                    MAP_NAME = 0x008b57a4;
+                    WEIGHT = 0x008b64d8;
+                    MAX_WEIGHT = 0x008b64cc;
+                    EXP = 0x008b6418;
+                    EXP_TO_NEXT = 0x008b6424;
+                    BASE_LEVEL = 0x008b641c;
+                    JOB_LEVEL = 0x008b6428;
+                    JOB_EXP = 0x008b64d4;
+                    JOB_EXP_TO_NEXT = 0x008b64d0;
+                }
+                else
+                {
+                    HP = 0x99DAC4;
+                    SP = 0x99DACC;
+                    MAX_HP = 0x99DAC8;
+                    MAX_SP = 0x99DAD0;
+                    NAME = 0x99e000;
+                    MAP_NAME = 0x99aa0c;
+                    WEIGHT = 0x99b74c;
+                    MAX_WEIGHT = 0x99b740;
+                    EXP = 0x99b68c;
+                    EXP_TO_NEXT = 0x99b698;
+                    BASE_LEVEL = 0x99b690;
+                    JOB_LEVEL = 0x99b69c;
+                    JOB_EXP = 0x99b748;
+                    JOB_EXP_TO_NEXT = 0x99b744;
+                }
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Character))
+            {
+                return false;
+            }
+            if (((obj as Character).Client == this.Client) && ((obj as Character).Name == this.Name))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         public void Dispose()
         {
             ReadWriteMemory.ProcessMemory.CloseHandle(memory.ProcessHandle);
             memory = null;
+        }
+
+        public void ReadBasicStats()
+        {
+            Name = Memory.ReadStringAscii(NAME, MAX_LEN);
+            CurrentHp = Memory.ReadInt(HP);
+            MaxHp = Memory.ReadInt(MAX_HP);
+            CurrentSp = Memory.ReadInt(SP);
+            MaxSp = Memory.ReadInt(MAX_SP);
+            CurrentWeight = Memory.ReadInt(WEIGHT);
+            MaxWeight = Memory.ReadInt(MAX_WEIGHT);
+            MapName = Memory.ReadStringAscii(MAP_NAME, MAX_MAP_NAME_LEN);
+
+            HpPercent = MaxHp == 0 ? 0 : (float)CurrentHp * 100.0f / (float)MaxHp;
+            SpPercent = MaxSp == 0 ? 0 : (float)CurrentSp * 100.0f / (float)MaxSp;
+            WeightPercent = MaxWeight == 0 ? 0 : (float)CurrentWeight * 100.0f / (float)MaxWeight;
+        }
+
+        public void UpdateToNext()
+        {
+            ExpToNext = Memory.ReadInt(EXP_TO_NEXT);
+            JobToNext = Memory.ReadInt(JOB_EXP_TO_NEXT);
+        }
+
+        public void UpdatePerHour(bool useLastKill)
+        {
+            if (FirstKill != DateTime.MinValue)
+            {
+                Time = (useLastKill ? LastKill : DateTime.Now) - FirstKill;
+                if (Time.TotalSeconds <= 5)
+                {
+                    ExpPerHour = 0;
+                    JobPerHour = 0;
+                }
+                else
+                {
+                    ExpPerHour = (int)((double)TotalExp / Time.TotalHours);
+                    JobPerHour = (int)((double)TotalJob / Time.TotalHours);
+                    UpdateEstimate();
+                }
+            }
+        }
+
+        public void UpdateEstimate()
+        {
+            if (ExpPerHour > 0)
+            {
+                if (ExpToNext == BASE_99_150_EXP)
+                {
+                    BaseEstimate = TimeSpan.Zero;
+                }
+                else
+                {
+                    double expEst = ((double)(ExpToNext - CurrentExp)) / (double)ExpPerHour;
+                    BaseEstimate = TimeSpan.FromHours(expEst);
+                }
+            }
+            else
+            {
+                BaseEstimate = TimeSpan.Zero;
+            }
+            if (JobPerHour > 0)
+            {
+                if (JobToNext == JOB_99_EXP)
+                {
+                    JobEstimate = TimeSpan.Zero;
+                }
+                else
+                {
+                    double expEst = ((double)(JobToNext - CurrentJob)) / (double)JobPerHour;
+                    JobEstimate = TimeSpan.FromHours(expEst);
+                }
+            }
+            else
+            {
+                JobEstimate = TimeSpan.Zero;
+            }
+        }
+
+        public void Reset()
+        {
+            FirstKill = DateTime.MinValue;
+            LastKill = DateTime.MinValue;
+            TotalExp = 0;
+            ExpPerHour = 0;
+            TotalJob = 0;
+            JobPerHour = 0;
+            IsStopped = false;
+            Time = TimeSpan.Zero;
+            BaseEstimate = TimeSpan.Zero;
+            JobEstimate = TimeSpan.Zero;
+        }
+
+        public void UpdateKillTime()
+        {
+            if (IsStopped)
+            {
+                Reset();
+            }
+            if (FirstKill == DateTime.MinValue)
+            {
+                FirstKill = DateTime.Now;
+            }
+            LastKill = DateTime.Now;
+        }
+
+        public void Stop()
+        {            
+            IsStopped = true;
+            if (FirstKill == DateTime.MinValue || LastKill == DateTime.MinValue)
+            {
+                Reset();
+            }
+            else
+            {
+                Time = LastKill - FirstKill;
+                FirstKill = DateTime.MinValue;
+                LastKill = DateTime.MinValue;
+                UpdatePerHour(true);
+                UpdateEstimate();
+            }
         }
     }
 }

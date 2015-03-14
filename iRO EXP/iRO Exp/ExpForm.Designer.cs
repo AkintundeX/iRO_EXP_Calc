@@ -62,14 +62,13 @@
             this.textExpPercent = new System.Windows.Forms.Label();
             this.textJobPercent = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.displayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.screenOnLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.suppressExceptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableScreenshotterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableWindowsKeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableHotkeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calculatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,7 +77,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabCharacter = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.enableHotkeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textHotkeysEnabled = new System.Windows.Forms.Label();
             this.gbExp.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabCharacter.SuspendLayout();
@@ -420,7 +419,6 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.displayToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.calculatorToolStripMenuItem,
             this.aboutToolStripMenuItem});
@@ -429,21 +427,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(720, 24);
             this.menuStrip1.TabIndex = 22;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // displayToolStripMenuItem
-            // 
-            this.displayToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.profileToolStripMenuItem});
-            this.displayToolStripMenuItem.Name = "displayToolStripMenuItem";
-            this.displayToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.displayToolStripMenuItem.Text = "&Display";
-            // 
-            // profileToolStripMenuItem
-            // 
-            this.profileToolStripMenuItem.Name = "profileToolStripMenuItem";
-            this.profileToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.profileToolStripMenuItem.Text = "&Profile Mode";
-            this.profileToolStripMenuItem.Click += new System.EventHandler(this.profileToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -493,6 +476,13 @@
             this.advancedToolStripMenuItem.Text = "Advanced";
             this.advancedToolStripMenuItem.Click += new System.EventHandler(this.advancedToolStripMenuItem_Click);
             // 
+            // enableHotkeysToolStripMenuItem
+            // 
+            this.enableHotkeysToolStripMenuItem.Name = "enableHotkeysToolStripMenuItem";
+            this.enableHotkeysToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.enableHotkeysToolStripMenuItem.Text = "Enable Hotkeys";
+            this.enableHotkeysToolStripMenuItem.Click += new System.EventHandler(this.enableHotkeysToolStripMenuItem_Click);
+            // 
             // calculatorToolStripMenuItem
             // 
             this.calculatorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -507,28 +497,28 @@
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.resetToolStripMenuItem.Text = "&Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
             // stopToolStripMenuItem
             // 
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.stopToolStripMenuItem.Text = "&Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
             // resetAllToolStripMenuItem
             // 
             this.resetAllToolStripMenuItem.Name = "resetAllToolStripMenuItem";
-            this.resetAllToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.resetAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.resetAllToolStripMenuItem.Text = "Reset All";
             this.resetAllToolStripMenuItem.Click += new System.EventHandler(this.resetAllToolStripMenuItem_Click);
             // 
             // stopAllToolStripMenuItem
             // 
             this.stopAllToolStripMenuItem.Name = "stopAllToolStripMenuItem";
-            this.stopAllToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.stopAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.stopAllToolStripMenuItem.Text = "Stop All";
             this.stopAllToolStripMenuItem.Click += new System.EventHandler(this.stopAllToolStripMenuItem_Click);
             // 
@@ -558,18 +548,22 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // enableHotkeysToolStripMenuItem
+            // textHotkeysEnabled
             // 
-            this.enableHotkeysToolStripMenuItem.Name = "enableHotkeysToolStripMenuItem";
-            this.enableHotkeysToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.enableHotkeysToolStripMenuItem.Text = "Enable Hotkeys";
-            this.enableHotkeysToolStripMenuItem.Click += new System.EventHandler(this.enableHotkeysToolStripMenuItem_Click);
+            this.textHotkeysEnabled.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textHotkeysEnabled.Location = new System.Drawing.Point(12, 213);
+            this.textHotkeysEnabled.Name = "textHotkeysEnabled";
+            this.textHotkeysEnabled.Size = new System.Drawing.Size(116, 23);
+            this.textHotkeysEnabled.TabIndex = 24;
+            this.textHotkeysEnabled.Text = "Hotkeys OFF";
+            this.textHotkeysEnabled.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ExpForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(720, 242);
+            this.Controls.Add(this.textHotkeysEnabled);
             this.Controls.Add(this.tabCharacter);
             this.Controls.Add(this.textJobPercent);
             this.Controls.Add(this.textExpPercent);
@@ -641,8 +635,6 @@
         private System.Windows.Forms.Label labelJobEstimate;
         private System.Windows.Forms.Label labelBaseEstimate;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem displayToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem profileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem screenOnLevelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem suppressExceptionsToolStripMenuItem;
@@ -658,6 +650,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem advancedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableHotkeysToolStripMenuItem;
+        private System.Windows.Forms.Label textHotkeysEnabled;
 
     }
 }

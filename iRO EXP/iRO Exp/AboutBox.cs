@@ -13,11 +13,11 @@ namespace iROClassicExp
         {
             InitializeComponent();
             this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
+            this.labelProductName.Text = "iRO EXP";
+            this.labelVersion.Text = "2.0 Sort of Beta";
+            this.labelCopyright.Text = "Copyright 2013 by Jaffer";
             this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            this.textBoxDescription.Text = "An EXP per hour calculator for iRO's Classic.Loki and Renewal.Chaos.  Developed by Akintunde (aka Jaffer) for free distribution.  Sharing of this program is highly encouraged.  No monetary compensation was received or sought after for the development of this program.";
         }
 
         #region Assembly Attribute Accessors
